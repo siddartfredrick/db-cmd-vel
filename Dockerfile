@@ -61,4 +61,9 @@ LABEL org.duckietown.label.base.image "${BASE_IMAGE}:${BASE_TAG}"
 # <==================================================
 
 # maintainer
-LABEL maintainer="Chris Bayley (chris.bayley@dal.ca)"
+LABEL maintainer="Mech 4640 TA (mech4640@mail.com)"
+
+
+
+
+
