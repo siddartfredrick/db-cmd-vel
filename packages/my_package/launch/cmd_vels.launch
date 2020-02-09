@@ -1,0 +1,9 @@
+<launch>
+
+
+  <node pkg="my_package" type="cmd_vels.py" name="cmd_vels" output="screen"/>
+  <!-- <node pkg="my_package" type="cmd_vels.py" name="slow_cmd_vels" output="screen"/> -->
+
+
+</launch>
+
