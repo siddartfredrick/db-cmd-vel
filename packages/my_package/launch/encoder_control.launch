@@ -1,0 +1,19 @@
+<launch>
+
+  <group ns="$(arg veh)">
+
+
+
+    <!-- This launches the Encoder Control node                                               -->
+    <!-- Note: This node MUST be called in conjunction with db-read-encoders in order to work -->
+    <!-- See READMEM.md at the top-level directory of this ROS node for more information       -->
+    <node pkg="my_package" type="encoder_control.py" name="encoder_control" output="screen">
+      <remap from="/wheels_driver_node/wheels_cmd" to="$(arg veh)/wheels_driver_node/wheels_cmd"/>
+    </node>
+  
+
+
+  </group>
+
+</launch>
+

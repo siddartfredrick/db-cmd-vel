@@ -12,7 +12,8 @@ class MyNode(DTROS):
         # initialize the DTROS parent class
         super(MyNode, self).__init__(node_name=node_name)
         # construct publisher
-        self.pub = rospy.Publisher('islduckie44/wheels_driver_node/wheels_cmd', WheelsCmdStamped, queue_size=1)
+        self.pub = rospy.Publisher('~wheels_cmd', WheelsCmdStamped, queue_size=1)
+        self.pub = rospy.Publisher('islduckie51/wheels_driver_node/wheels_cmd', WheelsCmdStamped, queue_size=1)
 
     def run(self):
         # publish message every 1 second
