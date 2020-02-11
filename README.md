@@ -5,7 +5,7 @@ Documentation for the Duckietown project can be found [here](https://docs.duckie
 
 ---
 ## Note!
-The encoder_control node in this package has been designed to work in conjunction with the [db-read-encoders](https://github.com/mech-4640/db-read-encoders) node, which MUST be running first.
+The encoder_control node in this package has been designed to work in conjunction with the [db-read-encoders](https://github.com/mech-4640/db-read-encoders) node, which **MUST** be running first.
 To install db-read-encoders, please run in terminal:
 
 	$ cd ~/catkin_ws/src
@@ -16,6 +16,9 @@ To run the db-read-encoders node, please run:
 	$ cd ~/catkin_ws/src/db-read-encoders
 	$ dts devel build -f --arch arm32v7 -H islduckieXX.local
 	$ docker -H islduckieXX.local run -it --rm --privileged --net=host duckietown/db-read-encoders:master-arm32v7
+
+
+Note: Please replace the XX in `islduckieXX.local` in the command above with your Duckiebot number, or you may substitute this with the your Duckiebot's [hostname](https://docs.duckietown.org/DT19/opmanual_duckiebot/out/setup_duckiebot.html).
 
 ---
 	
