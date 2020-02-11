@@ -8,7 +8,7 @@ from duckietown import DTROS
 # Messages imports
 from duckietown_msgs.msg import WheelsCmdStamped
 from std_msgs.msg import Header, String, Int32, Float32
-from read_encoders.msg import encoderTicksStamped
+from my_package.msg import encoderTicksStamped
 
 class MyNode(DTROS):
 
@@ -18,9 +18,9 @@ class MyNode(DTROS):
 	
         # Construct publisher & subscriber
         #self.pub = rospy.Publisher('islduckie44/wheels_driver_node/wheels_cmd', WheelsCmdStamped, queue_size=1)
-        self.pub = rospy.Publisher('~/wheels_driver_node/wheels_cmd', WheelsCmdStamped, queue_size=1)
+        self.pub = rospy.Publisher('wheels_driver_node/wheels_cmd', WheelsCmdStamped, queue_size=1)
         self.sub_encoders = rospy.Subscriber("encoder_ticks", encoderTicksStamped, self.cbUpdateTicks)
-        self.sub_wheels = rospy.Subscriber("~/wheels_driver_node/wheels_cmd_executed", WheelsCmdStamped, self.cbUpdateWheels)
+        self.sub_wheels = rospy.Subscriber("wheels_driver_node/wheels_cmd_executed", WheelsCmdStamped, self.cbUpdateWheels)
 	
 
 	# DECLARE CLASS VARIABLES ----------------------------------------------------------
@@ -110,7 +110,7 @@ class MyNode(DTROS):
 	self.curr_encoder_time = msg.header.stamp
 
 	# Update number of encoder ticks traversed
-	calculateTraversed()
+	self.calculateTraversed()
 
 	# Update angular rate
 	# [deg / sec] 
@@ -156,7 +156,6 @@ class MyNode(DTROS):
 	self.right_encoder_ticks_traversed += ((-1)**(not self.right_wheel_forward)) * (self.curr_right_encoder_ticks - self.last_right_encoder_ticks)
 
 	# Update the left/right wheel distance travelled
-		
 	self.left_distance_traversed  += ((-1)**(not self.left_wheel_forward))  * (self.curr_left_encoder_ticks  - self.last_left_encoder_ticks) * (self.wheel_circumference /self.ticks_per_revolution)
 	self.right_distance_traversed += ((-1)**(not self.right_wheel_forward)) * (self.curr_right_encoder_ticks - self.last_right_encoder_ticks) * (self.wheel_circumference / self.ticks_per_revolution)
 
@@ -165,6 +164,7 @@ class MyNode(DTROS):
 
     def control(self):
 	# YOUR CONTROL CODE HERE
+	print("Add code here") # Nothing is calling this function yet.
 
 
 	

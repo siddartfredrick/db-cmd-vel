@@ -3,9 +3,28 @@ project(my_package)
 
 find_package(catkin REQUIRED COMPONENTS
   rospy
+
+# Only the encoder_ticks_node needs these
+  std_msgs
+  message_generation
 )
 
-catkin_package()
+add_message_files(
+  FILES
+  encoderTicksStamped.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
+catkin_package(
+  CATKIN_DEPENDS
+  message_runtime
+)
+
+#catkin_package()
 
 
 
