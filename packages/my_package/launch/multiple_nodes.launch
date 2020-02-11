@@ -2,7 +2,7 @@
 
   <!-- These packages were given by the Duckietown duckumentation at https://docs.duckietown.org/daffy/duckietown-robotics-development/out/dt_infrastructure.html -->
   <node pkg="my_package" type="my_node.py" name="my_node" output="screen"/>
-  <node pkg="my_package" type="my_node_subscriber.py" name="my_node_subscriber"  output="screen"/>
+  <!-- <node pkg="my_package" type="my_node_subscriber.py" name="my_node_subscriber"  output="screen"/> -->
 
   <!-- This runs the cmd_vels node -->
   <!-- Note: this node does not take encoder ticks into account for control purposes -->

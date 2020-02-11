@@ -114,8 +114,10 @@ class MyNode(DTROS):
 
 	# Update angular rate
 	# [deg / sec] 
-	self.left_wheel_speed_ang = ((self.curr_left_encoder_ticks - self.last_left_encoder_ticks)/(self.curr_encoder_time - self.last_encoder_time)) * (1/self.ticks_per_revolution)
-	self.right_wheel_speed_ang = ((self.curr_right_encoder_ticks - self.last_right_encoder_ticks)/(self.curr_encoder_time - self.last_encoder_time)) * (1/self.ticks_per_revolution)
+	self.left_wheel_speed_ang = ((self.curr_left_encoder_ticks - self.last_left_encoder_ticks)/ float(self.curr_encoder_time - self.last_encoder_time) ) * (1/self.ticks_per_revolution)
+	self.right_wheel_speed_ang = ((self.curr_right_encoder_ticks - self.last_right_encoder_ticks)/ float(self.curr_encoder_time - self.last_encoder_time) ) * (1/self.ticks_per_revolution)
+#	self.left_wheel_speed_ang = ((self.curr_left_encoder_ticks - self.last_left_encoder_ticks)/ rospy.Duration.from_sec(self.curr_encoder_time - self.last_encoder_time).to_sec() ) * (1/self.ticks_per_revolution)
+#	self.right_wheel_speed_ang = ((self.curr_right_encoder_ticks - self.last_right_encoder_ticks)/ rospy.Duration.from_sec(self.curr_encoder_time - self.last_encoder_time).to_sec() ) * (1/self.ticks_per_revolution)
 	# Update instantaneous linear wheel rate
 	# [mm/sec]
 	self.left_wheel_speed_lin = self.left_wheel_speed_ang * (self.wheel_circumference / 360) # [mm/s]=[deg/s]*[dist/360deg]
@@ -201,15 +203,15 @@ class MyNode(DTROS):
 	# for both motors for 30 seconds then shuts down by publishing wheel
 	# command velocity (cmd_vel) messages at 1 Hz.
 
-        # publish a message every 1 second
-        rate = rospy.Rate(1) # Hz
+        # publish a message corresponding to the rate
+        rate = rospy.Rate(20) # Hz
 
 	now = rospy.get_rostime()
 	secs = now.secs
-	wait_time = 30
+	wait_time = 10
 
 
-	# Run for 30 secs
+	# Run for the number of secs defined above
 	while((rospy.get_rostime().secs - secs) < wait_time):
 	    # Construct the wheel command message
             msg = WheelsCmdStamped()
