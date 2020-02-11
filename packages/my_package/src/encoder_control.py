@@ -35,8 +35,8 @@ class MyNode(DTROS):
 	# Forward/backward number of ticks (includes additions/subtractions) 
 	self.left_encoder_ticks_traversed = 0	
 	self.right_encoder_ticks_traversed = 0
-	self.last_encoder_time = 0 
-	self.curr_encoder_time = 0
+	self.last_encoder_time = rospy.get_time() 
+	self.curr_encoder_time = rospy.get_time()
 	self.ticks_per_revolution = 125 # Approximate placeholder value - waiting from DT org for real value
 
 	# Wheel Speed Variables
@@ -106,7 +106,7 @@ class MyNode(DTROS):
 
 	# Update current values from message
 	self.curr_left_encoder_ticks = msg.left_ticks
-	self.curr_left_encoder_ticks = msg.right_ticks
+	self.curr_right_encoder_ticks = msg.right_ticks
 	self.curr_encoder_time = msg.header.stamp
 
 	# Update number of encoder ticks traversed
@@ -114,15 +114,26 @@ class MyNode(DTROS):
 
 	# Update angular rate
 	# [deg / sec] 
-	self.left_wheel_speed_ang = ((self.curr_left_encoder_ticks - self.last_left_encoder_ticks)/ float(self.curr_encoder_time - self.last_encoder_time) ) * (1/self.ticks_per_revolution)
-	self.right_wheel_speed_ang = ((self.curr_right_encoder_ticks - self.last_right_encoder_ticks)/ float(self.curr_encoder_time - self.last_encoder_time) ) * (1/self.ticks_per_revolution)
-#	self.left_wheel_speed_ang = ((self.curr_left_encoder_ticks - self.last_left_encoder_ticks)/ rospy.Duration.from_sec(self.curr_encoder_time - self.last_encoder_time).to_sec() ) * (1/self.ticks_per_revolution)
-#	self.right_wheel_speed_ang = ((self.curr_right_encoder_ticks - self.last_right_encoder_ticks)/ rospy.Duration.from_sec(self.curr_encoder_time - self.last_encoder_time).to_sec() ) * (1/self.ticks_per_revolution)
+	#rospy.loginfo("Curr encoder time type:"); rospy.loginfo(type(self.curr_encoder_time)) # Diagnostic
+	#rospy.loginfo("Last encoder time type:"); rospy.loginfo(type(self.last_encoder_time)) # Diagnostic
+	self.time_since_last_update = (self.curr_encoder_time - self.last_encoder_time)
+	#rospy.loginfo("Time since last update"); rospy.loginfo(type(self.time_since_last_update)) # Diagnostic
+	#rospy.loginfo("Time diff"); rospy.loginfo(self.time_since_last_update) # Diagnostic
+	comp_time = float(self.time_since_last_update.secs + (self.time_since_last_update.nsecs * 1.0e-9))
+	#if (self.time_since_last_update.secs !=0): comp_time = float(self.time_since_last_update.secs + (self.time_since_last_update.nsecs * 1.0e-9))
+	#else: comp_time = float(self.time_since_last_update.nsecs * 1.0e-9) # Diagnostic
+	#rospy.loginfo("Comp time"); rospy.loginfo(comp_time)
+	self.left_wheel_speed_ang  = (float(self.curr_left_encoder_ticks  - self.last_left_encoder_ticks)/  comp_time) * (1.0/self.ticks_per_revolution)
+	self.right_wheel_speed_ang = (float(self.curr_right_encoder_ticks - self.last_right_encoder_ticks)/ comp_time) * (1.0/self.ticks_per_revolution)
+
+	#rospy.loginfo("v_L_ang %f \t v_R_ang %f" %(self.left_wheel_speed_ang, self.right_wheel_speed_ang)) # Diagnostic
+
 	# Update instantaneous linear wheel rate
 	# [mm/sec]
-	self.left_wheel_speed_lin = self.left_wheel_speed_ang * (self.wheel_circumference / 360) # [mm/s]=[deg/s]*[dist/360deg]
+	self.left_wheel_speed_lin  = self.left_wheel_speed_ang  * (self.wheel_circumference / 360) # [mm/s]=[deg/s]*[dist/360deg]
 	self.right_wheel_speed_lin = self.right_wheel_speed_ang * (self.wheel_circumference / 360) 
 
+	#rospy.loginfo("v_L_lin %f \t v_R_lin %f" %(self.left_wheel_speed_lin, self.right_wheel_speed_lin)) # Diagnostic
 
 
     def cbUpdateWheels(self, msg):
