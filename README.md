@@ -1,5 +1,7 @@
 # DB-Cmd-Vels
-This node can send wheel commands to the Duckiebot.
+This node sends wheel commands to the [Duckietown](https://www.duckietown.org/) Duckiebot.
+
+Documentation for the Duckietown project can be found [here](https://docs.duckietown.org/daffy/).
 
 ---
 ## Note!
@@ -54,7 +56,6 @@ For this part, the package `/packages/my_package` has already been created to ho
 Change the file `launch.sh` in your repository to
 launch your code.
 
-
 ---
-# This code borrowed from the Duckietown ROS template
+## This code borrowed from the Duckietown ROS template
 See [the template](https://github.com/duckietown/template-ros)
