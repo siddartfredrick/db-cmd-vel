@@ -14,11 +14,11 @@ To install db-read-encoders, please run in terminal:
 To run the db-read-encoders node, please run:
 
 	$ cd ~/catkin_ws/src/db-read-encoders
-	$ dts devel build -f --arch arm32v7 -H islduckieXX.local
-	$ docker -H islduckieXX.local run -it --rm --privileged --net=host duckietown/db-read-encoders:master-arm32v7
+	$ dts devel build -f --arch arm32v7 -H islduckieXX
+	$ docker -H islduckieXX run -it --rm --privileged --net=host duckietown/db-read-encoders:master-arm32v7
 
 
-Note: Please replace the XX in `islduckieXX.local` in the command above with your Duckiebot number, or you may substitute this with the your Duckiebot's [hostname](https://docs.duckietown.org/DT19/opmanual_duckiebot/out/setup_duckiebot.html).
+Note: Please replace the XX in `islduckieXX.local` in the command above with your Duckiebot number, or you may substitute this with the your Duckiebot's [hostname](https://docs.duckietown.org/DT19/opmanual_duckiebot/out/setup_duckiebot.html). If you are working outside of a virtual machine, please change instances of `islduckieXX` to `islduckieXX.local`.
 
 ---
 	
