@@ -15,7 +15,7 @@ To run the db-read-encoders node, please run:
 
 	$ cd ~/catkin_ws/src/db-read-encoders
 	$ dts devel build -f --arch arm32v7 -H islduckieXX.local
-	$ docker -H islduckieXX.local run -it --rm --net=host duckietown/db-read-encoders:master-arm32v7
+	$ docker -H islduckieXX.local run -it --rm --privileged --net=host duckietown/db-read-encoders:master-arm32v7
 
 ---
 	
