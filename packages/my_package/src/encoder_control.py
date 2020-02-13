@@ -15,13 +15,13 @@ class MyNode(DTROS):
     def __init__(self, node_name):
         # initialize the DTROS parent class
         super(MyNode, self).__init__(node_name=node_name)
-	
+
         # Construct publisher & subscriber
         #self.pub = rospy.Publisher('islduckie44/wheels_driver_node/wheels_cmd', WheelsCmdStamped, queue_size=1)
         self.pub = rospy.Publisher('wheels_driver_node/wheels_cmd', WheelsCmdStamped, queue_size=1)
         self.sub_encoders = rospy.Subscriber("encoder_ticks", encoderTicksStamped, self.cbUpdateTicks)
         self.sub_wheels = rospy.Subscriber("wheels_driver_node/wheels_cmd_executed", WheelsCmdStamped, self.cbUpdateWheels)
-	
+
 
 	# DECLARE CLASS VARIABLES ----------------------------------------------------------
 
@@ -35,8 +35,9 @@ class MyNode(DTROS):
 	# Forward/backward number of ticks (includes additions/subtractions) 
 	self.left_encoder_ticks_traversed = 0	
 	self.right_encoder_ticks_traversed = 0
-	self.last_encoder_time = rospy.get_time() 
+	self.last_encoder_time = rospy.get_time()
 	self.curr_encoder_time = rospy.get_time()
+	self.time_since_last_update = rospy.Duration(0)
 	self.ticks_per_revolution = 125 # Approximate placeholder value - waiting from DT org for real value
 
 	# Wheel Speed Variables
@@ -57,7 +58,7 @@ class MyNode(DTROS):
 	# Can be calculated from left/right encoder ticks related to distance via wheel circumference
 	self.left_distance_traversed  = 0 # [mm]
 	self.right_distance_traversed = 0 # [mm]
-	
+
 	# Wheel direction of rotation
 	# Used to calculate how to handle the new encoder ticks
 	# Assume wheels are initially driving forward - associated with positive wheel velocities
@@ -116,7 +117,10 @@ class MyNode(DTROS):
 	# [deg / sec] 
 	#rospy.loginfo("Curr encoder time type:"); rospy.loginfo(type(self.curr_encoder_time)) # Diagnostic
 	#rospy.loginfo("Last encoder time type:"); rospy.loginfo(type(self.last_encoder_time)) # Diagnostic
-	self.time_since_last_update = (self.curr_encoder_time - self.last_encoder_time)
+	try:
+		self.time_since_last_update = (self.curr_encoder_time - self.last_encoder_time)
+	except:
+		import pdb; pdb.set_trace()
 	#rospy.loginfo("Time since last update"); rospy.loginfo(type(self.time_since_last_update)) # Diagnostic
 	#rospy.loginfo("Time diff"); rospy.loginfo(self.time_since_last_update) # Diagnostic
 	comp_time = float(self.time_since_last_update.secs + (self.time_since_last_update.nsecs * 1.0e-9))
@@ -215,7 +219,7 @@ class MyNode(DTROS):
 	# command velocity (cmd_vel) messages at 1 Hz.
 
         # publish a message corresponding to the rate
-        rate = rospy.Rate(20) # Hz
+        rate = rospy.Rate(2) # Hz
 
 	now = rospy.get_rostime()
 	secs = now.secs
