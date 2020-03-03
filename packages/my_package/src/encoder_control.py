@@ -50,7 +50,7 @@ class MyNode(DTROS):
 		#			change time
 	# To be calculated during operation
 	# Associated with the rpm angular speed, not pwm wheel command speed
-	self.left_wheel_speed_ang  = 0 # [deg/sec]
+	self.left_wheel_speed_ang  = 10 # [deg/sec]
 	self.right_wheel_speed_ang = 0 
 	self.left_wheel_speed_lin  = 0 # [mm/sec] Instantaneous
 	self.right_wheel_speed_lin = 0
